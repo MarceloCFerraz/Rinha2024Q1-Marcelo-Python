@@ -1,5 +1,9 @@
-from Models.Client import Client
-from Models.Transaction import Transaction
+from gevent import monkey
+
+from Models.client import Client
+from Models.transaction import Transaction
+
+monkey.patch_all()  # Ensure monkeypatching
 
 
 class ApiController:

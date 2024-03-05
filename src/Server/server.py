@@ -1,7 +1,8 @@
 import os
 import socket
 
-from Pool.thread_pool import ThreadPool
+from Models.tcp_request import TcpRequest
+from Server.Pool.thread_pool import ThreadPool
 
 
 class HTTPServer:
@@ -13,18 +14,16 @@ class HTTPServer:
         self.pool = workers_pool
         self.init_server()
 
-    def init_server(self):
+    def init_server(self) -> None:
+        print(f">> Server listening on {self.HOST}:{self.PORT}")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+            # server_socket.setblocking(False)
             server_socket.bind((self.HOST, self.PORT))
             server_socket.listen(self.pool.get_backlog_length())
 
-            print(f"Server listening on {self.HOST}:{self.PORT}")
-
-            while True:
+            while True:  # this line didn't exist
+                # gets client request
                 client_socket, address = server_socket.accept()
-                print(f"New connection: {address}. Socket: {client_socket}")
-                # TODO: parse and validate request (register endpoints, check for content type, etc)
-                # TODO: send request to controller (let controller handle or delegate business logic)
-                print()
-
-                client_socket.close()
+                client_socket.setblocking(False)
+                # adds client request to request pool
+                self.pool.enqueue_request(TcpRequest(address, client_socket))

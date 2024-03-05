@@ -1,12 +1,10 @@
 import uuid
 
-import gevent
-
 
 class TcpRequest:
     request_id: str
     address: str
-    socket: gevent._socket3.socket
+    socket: object
 
     def __init__(self, adr, socket) -> None:
         self.request_id = str(uuid.uuid4())
