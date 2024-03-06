@@ -92,7 +92,6 @@ class TcpRequest:
 
         except JSONDecodeError:
             # if the body is not parseable, probably there isn't a body
-            print()
             body = None
 
         self.parsed_request = ParsedRequest(method, full_path, http_version, body)

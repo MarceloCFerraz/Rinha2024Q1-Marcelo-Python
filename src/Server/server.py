@@ -6,8 +6,8 @@ from Server.Pool.thread_pool import ThreadPool
 
 
 class HTTPServer:
-    HOST = "127.0.0.1"
-    PORT = int(os.getenv("API_PORT")) if os.getenv("API_PORT") is not None else 8080
+    HOST = "localhost"
+    PORT = int(os.getenv("API_PORT")) if os.getenv("API_PORT") is not None else 8081
     pool: ThreadPool
 
     def __init__(self, workers_pool: ThreadPool) -> None:  # noqa: F821

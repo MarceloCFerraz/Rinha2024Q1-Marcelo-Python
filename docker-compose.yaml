@@ -21,7 +21,7 @@ services:
                     memory: "300MB" # got up to 100ish MB
 
     api01: &api
-        image: marcelocferraz/rinha2024q1-marcelo-lucas-dotnet:latest
+        image: rinha2024q1-marcelo-python:latest
         hostname: api01
         depends_on:
             - db
@@ -34,6 +34,9 @@ services:
             - DB_NAME=rinha
             - DB_USER=admin
             - DB_PASS=mystrongpassword
+            - MAX_WORKERS=10
+            - MAX_FIBERS=10
+            - MAX_DB_CONNECTIONS=100
         deploy:
             resources:
                 limits:
@@ -67,5 +70,4 @@ services:
 
 networks:
     default:
-        driver: host
         name: rinha-nginx-2024q1
