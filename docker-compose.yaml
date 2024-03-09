@@ -21,22 +21,22 @@ services:
                     memory: "300MB" # got up to 100ish MB
 
     api01: &api
-        image: rinha2024q1-marcelo-python:latest
+        image: marcelocferraz/rinha2024q1-marcelo-python:latest
         hostname: api01
         depends_on:
             - db
         ports:
             - "8081:8081"
         environment:
+            - API_HOSTNAME=api01
             - API_PORT=8081
             - DB_PORT=5432
             - DB_HOSTNAME=db
             - DB_NAME=rinha
             - DB_USER=admin
             - DB_PASS=mystrongpassword
-            - MAX_WORKERS=10
-            - MAX_FIBERS=10
-            - MAX_DB_CONNECTIONS=100
+            - MAX_CONNECTIONS=10
+            - MAX_DB_CONNECTIONS=10
         deploy:
             resources:
                 limits:
@@ -49,7 +49,15 @@ services:
         ports:
             - "8082:8082"
         environment:
+            - API_HOSTNAME=api02
             - API_PORT=8082
+            - DB_PORT=5432
+            - DB_HOSTNAME=db
+            - DB_NAME=rinha
+            - DB_USER=admin
+            - DB_PASS=mystrongpassword
+            - MAX_CONNECTIONS=10
+            - MAX_DB_CONNECTIONS=10
         depends_on:
             - api01
 
